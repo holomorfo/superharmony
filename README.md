@@ -1,0 +1,2 @@
+# superharmony
+SuperCollider harmony helper
