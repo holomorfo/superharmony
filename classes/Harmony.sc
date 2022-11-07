@@ -17,7 +17,7 @@ Harmony{
 	init{arg notesList;
 		notesList=notesList.sort;
 		if(notesList.size>0,{
-			defAc= DefAcordesJazz.new.init;
+			defAc= ChordsDefinitions.new.init;
 			notesHarmony = notesList;
 			notesInterval = Array.fill(notesHarmony.size,0);
 			this.setSimplify();
@@ -33,7 +33,7 @@ Harmony{
 
 	create{arg  fund, tipo;
 		var notesList;
-		defAc= DefAcordesJazz.new.init;
+		defAc= ChordsDefinitions.new.init;
 		// Correr sobre todos los tipos
 		defAc.arms.collect({arg elem, num;
 			if(elem.name == tipo,{
