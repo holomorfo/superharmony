@@ -16,11 +16,10 @@ ChordsDefinitions{
 		arms.add(HarmonyDefinition.new.init("DM9*5",[0, 2, 4, 10]));
 		arms.add(HarmonyDefinition.new.init("Dm9*5",[0, 1, 4, 10]));
 
-
 		 arms.add(HarmonyDefinition.new.init("5",[0,7]));
 		 arms.add(HarmonyDefinition.new.init("Sus4",[0,5,7]));
 		 arms.add(HarmonyDefinition.new.init("Sus2",[0,2,7]));
-		 arms.add(HarmonyDefinition.new.init("6",[0,4,7,9])); //Se confunde con A7 en [CM]
+		 arms.add(HarmonyDefinition.new.init("6",[0,4,7,9])); // Check difference with A7 in [CM]
 		 arms.add(HarmonyDefinition.new.init("m6",[0,3,7,9]));
 		 arms.add(HarmonyDefinition.new.init("9",[0,2,4,7,10]));
 		 arms.add(HarmonyDefinition.new.init("m9",[0,2,3,7,10]));

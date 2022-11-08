@@ -34,7 +34,6 @@ Harmony{
 	create{arg  fund, type;
 		var notesList;
 		defAc= ChordsDefinitions.new.init;
-		// Correr sobre todos los tipos
 		defAc.arms.collect({arg elem, num;
 			if(elem.name == type,{
 				notesList = elem.notesDefinition;
@@ -48,7 +47,6 @@ Harmony{
 
 
 	assignListIndex{
-		// Revisar si es igual a alguno de la librería
 		var cond = true;
 		var i=0;
 		for(0,defAc.arms.size-1,{arg i;
@@ -57,11 +55,6 @@ Harmony{
 				harmonyTypeStr = defAc.arms[i].name;
 			});
 		});
-
-		// ENLACES
-		// setDisposicion();
-		// setPosMel();
-		// setDuplicacion();
 	}
 
 	belongsInList{arg chordNotes;
@@ -72,7 +65,6 @@ Harmony{
 			for(0,notesSimplified.size-1,{arg r;
 				substract = notesSimplified[r];
 				for(0,tempA.size-1,{arg i;
-					// El modulo debe ser el de grupos no con negativos
 					tempA.put(i,(notesSimplified[i]-substract)%12);
 				});
 				tempA.sort;
@@ -92,7 +84,6 @@ Harmony{
 		var different = Array.new(notesHarmony.size);
 		notesTemp  = notesTemp %12;
 		notesTemp  = notesTemp .sort;
-		// Quitar notas repetidas
 		different.add(notesTemp[0]);
 		for(0, notesTemp.size-1,{arg i;
 			var condicion = 0;
@@ -232,15 +223,11 @@ Harmony{
 		var newcost = Array.fill(len0,0);
 		var swap;
 		// initial cost of skipping prefix in String s0
-		//"1".postln;
 		for(0,len0-1,{arg i;cost[i]=i;});
-		//"2".postln;
 
 		// dynamicaly computing the array of distances
 		// transformation cost for each letter in s1
 		for(1,len1-1,{arg j;
-			//"3".postln;
-
 			newcost[0]=j;
 			for(1,len0-1,{arg i;
 				// matching current letters in both str
@@ -249,21 +236,12 @@ Harmony{
 				var cost_replace;
 				var cose_insert;
 				var cost_delete;
-				//"4".postln;
 				if(s0[i-1]==s1[j-1],
 					{match=0},{match=1});
-				//"Match ".post;
-				//match.postln;
 				// computing cost for each trans
-				//"5".postln;
-				//"cost".postln;
-				//cost[i-1].postln;
 				cost_replace=cost[i-1]+match;
-				//"6".postln;
 				cose_insert=cost[i]+1;
-				//"7".postln;
 				cost_delete=newcost[i-1]+1;
-
 				// Keep minimum cost
 				newcost[i]=min(
 					min(cose_insert,

@@ -1,10 +1,10 @@
 Tonality{
 	var <>notesTonality;
 	var defScalesChords;
-	var <>listChords; // Lista de Armonias en la scale
-	var <>scaleType; //Char M:major, m: menor, a: armonica, n: natural, l:melodica
-	var <>scaleBase; // float base de la scale numerp
-	var sharp; // boolean, si va con sostenidos o no
+	var <>listChords; 
+	var <>scaleType; //Char M:major, m: minor, a: armonica, n: natural, l:melodica
+	var <>scaleBase; 
+	var sharp; // boolean if notation has sharps or not
 	var major;
 	var harmonicMinor;
 

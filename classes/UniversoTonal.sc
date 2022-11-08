@@ -306,14 +306,12 @@ TonalUniverse{
 
 	getChordsFromString{arg strList;
 		var listaArms=Harmony.new(100);
-
 	}
 
 	getSecondaryChordStr{arg unArm;
 		^this.degreeSecondaryStr
 		(unArm,this.getCurrentScale);
 	}
-
 
 	note2Num{arg notaString = "C";
 		var gradNum;
@@ -338,11 +336,9 @@ TonalUniverse{
 		^gradNum;
 	}
 
-
 	printCurrentString{
 		this.getCurrentScale.scaleBase.post;
 		this.getCurrentScale.scaleType.postln;
-
 	}
 }
 

@@ -19,7 +19,7 @@ ScalesChordsDefinitions{
 			(Harmony.new.init(base+9+def.str2Ac("m")));
 			chordsList.add
 			(Harmony.new.init(base+11+def.str2Ac("o")));
-			// Septimos
+			// Sevenths
 			chordsList.add
 			(Harmony.new.init(base+0+def.str2Ac("M7")));
 			chordsList.add
@@ -36,17 +36,17 @@ ScalesChordsDefinitions{
 			(Harmony.new.init(base+11+def.str2Ac("o/7")));
 			chordsList.add
 			(Harmony.new.init(base+4+def.str2Ac("m7")));
-			// major armonica
+			// major harmonic
 			chordsList.add
 			(Harmony.new.init(base+2+def.str2Ac( "o")));
-			// major armonicos septimo
+			// major harmonic seventh
 			chordsList.add
 			(Harmony.new.init(base+11+def.str2Ac( "o7")));
-			//Napolitano
-			//Subdominante armonico
+			// Neapolitan
+			// Harmonic subdominant
 			chordsList.add
 			(Harmony.new.init(base+5+def.str2Ac( "m")));
-			//Dominante noveno
+			// Dominant ninth
 			chordsList.add
 			(Harmony.new.init(base+7+def.str2Ac( "9")));
 			chordsList.add
@@ -56,7 +56,7 @@ ScalesChordsDefinitions{
 			// 9na de Cristian
 			chordsList.add
 			(Harmony.new.init(base+7+def.str2Ac( "7b9")));
-			//Dominantes alterados
+			// Altered dominants
 			chordsList.add
 			(Harmony.new.init(base+7+def.str2Ac( "7b5")));
 			chordsList.add
@@ -65,7 +65,7 @@ ScalesChordsDefinitions{
 			(Harmony.new.init(base+7+def.str2Ac( "D7*5")));
 		}
 		{"m"}   {
-			// Menor natural
+			// Natural minor
 			// {"m", "o", "M", "m", "m", "M", "M"};
 			chordsList.add
 			(Harmony.new.init(base+0+def.str2Ac("m")));
