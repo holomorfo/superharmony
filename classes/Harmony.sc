@@ -31,12 +31,12 @@ Harmony{
 		});
 	}
 
-	create{arg  fund, tipo;
+	create{arg  fund, type;
 		var notesList;
 		defAc= ChordsDefinitions.new.init;
 		// Correr sobre todos los tipos
 		defAc.arms.collect({arg elem, num;
-			if(elem.name == tipo,{
+			if(elem.name == type,{
 				notesList = elem.notesDefinition;
 			});
 		});
