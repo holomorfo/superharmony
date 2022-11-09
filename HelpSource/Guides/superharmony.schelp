@@ -1,0 +1,28 @@
+title:: Superharmony
+summary:: Harmony universe utilities
+categories:: Libraries>superharmony
+
+Superharmony is a diverse library of utilities for exploring tonality.
+
+section:: Components
+
+subsection:: Harmony
+
+Supported by link::Browse#Libraries>MathLib>Cartesian%20&c.#Cartesian &c.::
+
+
+subsection:: Tonality
+
+Tonality and scales
+
+subsection:: Tonal universe
+
+Tonal universe of coordinates.
+
+image::Chordtris.png::
+
+
+
+section:: Author
+Cristian Banuelos,
+dr_holomorfo
