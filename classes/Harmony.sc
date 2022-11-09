@@ -1,15 +1,15 @@
 Harmony{
-	var <>fundamental = 0;
-	var <>notesHarmony;
-	var <>notesSimplified;
-	var <>notesInterval;
-	var <>harmonyTypeStr="*";
-	var <>inversion;
-	var <>inversionStr="";
-	var <>defAc;
+	var <fundamental = 0;
+	var <notesHarmony;
+	var <notesSimplified;
+	var <notesInterval;
+	var <harmonyTypeStr="*";
+	var <inversion;
+	var <inversionStr="";
+	var prDefAc;
 	var isSeventh=false;
 	var substract;
-	var <>idxAcorde;
+	var prIdxAcorde;
 	*new { arg notesList=[0];
 		^super.new.init(notesList);
 	}
@@ -17,12 +17,12 @@ Harmony{
 	init{arg notesList;
 		notesList=notesList.sort;
 		if(notesList.size>0,{
-			defAc= ChordsDefinitions.new.init;
+			prDefAc= ChordsDefinitions.new.init;
 			notesHarmony = notesList;
 			notesInterval = Array.fill(notesHarmony.size,0);
 			this.prSetSimplify();
 			this.prAssignListIndex();
-			this.prsetNotesIntervals();
+			this.prSetNotesIntervals();
 			this.prSetInversion();
 			this.prSetInversionString();
 			},{
@@ -46,15 +46,15 @@ Harmony{
 	prAssignListIndex{
 		var cond = true;
 		var i=0;
-		for(0,defAc.arms.size-1,{arg i;
-			if(this.belongsInList(defAc.arms[i].notesDefinition),{
-				idxAcorde = i;
-				harmonyTypeStr = defAc.arms[i].name;
+		for(0,prDefAc.arms.size-1,{arg i;
+			if(this.prBelongsInList(prDefAc.arms[i].notesDefinition),{
+				prIdxAcorde = i;
+				harmonyTypeStr = prDefAc.arms[i].name;
 			});
 		});
 	}
 
-	belongsInList{arg chordNotes;
+	prBelongsInList{arg chordNotes;
 		var cond=false;
 		var tempA = Array.new();
 		if(notesSimplified.size==chordNotes.size,{
@@ -79,8 +79,9 @@ Harmony{
 	prSetSimplify{
 		var notesTemp = this.notesHarmony;
 		var different = Array.new(notesHarmony.size);
-		notesTemp  = notesTemp %12;
-		notesTemp  = notesTemp .sort;
+		"prSetSimplify".postln;
+		notesTemp  = notesTemp%12;
+		notesTemp  = notesTemp.sort;
 		different.add(notesTemp[0]);
 		for(0, notesTemp.size-1,{arg i;
 			var condicion = 0;
@@ -95,23 +96,25 @@ Harmony{
 				different.add(notesTemp[i]);
 			});
 		});
+		"different".postln;
+		different.postln;
 		notesSimplified = different;
 	}
 
-	prsetNotesIntervals{
+	prSetNotesIntervals{
 		var dist;
 		notesInterval = Array.new(notesHarmony.size);
 		for(0,notesHarmony.size-1,{arg i;
 			var resta = (fundamental-notesHarmony[i]);
 			dist = abs((fundamental-notesHarmony[i]))%12;
-			notesInterval.add(this.diatonicInterval(dist));
-			if(this.diatonicInterval(dist)==7,{
+			notesInterval.add(this.prDiatonicInterval(dist));
+			if(this.prDiatonicInterval(dist)==7,{
 				isSeventh=true;
 			});
 		});
 	}
 
-	diatonicInterval{arg dist;
+	prDiatonicInterval{arg dist;
 		var regresar=(-1);
 		regresar = switch (dist,
 			0,   { 1 },
@@ -207,12 +210,14 @@ Harmony{
 	}
 
 	metricMod12{arg unArm;
-		^this.distance(
+		^Harmony.lavenshteinDistance(
 			this.notesHarmony%12,
 			unArm.notesHarmony%12);
 	}
 
-	distance{arg s0, s1;
+	*lavenshteinDistance{arg s0, s1;
+		// Levenshtein_distance
+		// https://gist.github.com/ogregoire/6eff7186fb73715924c2c1b044daee63
 		var len0 = s0.size+1;
 		var len1 = s1.size+1;
 		// the array of distances
