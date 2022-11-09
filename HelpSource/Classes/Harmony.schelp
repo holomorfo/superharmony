@@ -1,0 +1,66 @@
+TITLE:: Harmony
+summary:: Representation of a chord with its harmonic content.
+categories:: Chords, Harmonies, Tonalities
+
+
+DESCRIPTION::
+Defines a chord as an array of numbers toghether with its harmonic content, including its chord type, base and inversion.
+
+Part of link::Guides/superharmony::, a diverse library of tonal analysis of chords.
+
+CLASSMETHODS::
+
+METHOD:: new
+Defines a new Cartesian point.
+
+METHOD:: create
+Get or set the x coordinate value.
+
+ARGUMENT::
+Fundamental note of the chord.
+
+ARGUMENT::
+Type of chord.
+
+
+INSTANCEMETHODS::
+
+subsection:: Accessing
+
+
+METHOD:: belongsInList
+Get or set the x coordinate value.
+
+code::
+Matrix.newDiagonal(Array.series(8));  // Integer
+Matrix.newDiagonal(Array.series(8.0));  // Float
+::
+
+ARGUMENT::
+Array of notes
+
+METHOD:: equivalent
+Checks if two chords have the same chord and type
+code::
+Harmony([10]
+::
+
+ARGUMENT::
+Harmony to compare with.
+
+
+EXAMPLES::
+
+a plot:
+code::
+{ LFPulse.ar(Line.kr(100, 800, 0.1)) }.plot(0.1);
+::
+
+50 Hz wave:
+code::
+{ LFPulse.ar(50) * 0.1 }.play;
+::
+
+
+section:: Authors
+Cristian Banuelos, 2022.
