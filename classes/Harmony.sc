@@ -20,33 +20,30 @@ Harmony{
 			defAc= ChordsDefinitions.new.init;
 			notesHarmony = notesList;
 			notesInterval = Array.fill(notesHarmony.size,0);
-			this.setSimplify();
-			this.assignListIndex();
-			this.setNotesIntervals();
-			this.setInversion();
-			this.setInversionString();
+			this.prSetSimplify();
+			this.prAssignListIndex();
+			this.prsetNotesIntervals();
+			this.prSetInversion();
+			this.prSetInversionString();
 			},{
 				notesHarmony = [0];
 				notesInterval = [0];
 		});
 	}
 
-	create{arg  fund, type;
-		var notesList;
-		defAc= ChordsDefinitions.new.init;
-		defAc.arms.collect({arg elem, num;
+	*create{arg fund, type;
+		var notesList, def;
+		def= ChordsDefinitions.new.init;
+		def.arms.collect({arg elem, num;
 			if(elem.name == type,{
 				notesList = elem.notesDefinition;
 			});
 		});
 		if(notesList.size==3,{notesList.add(notesList[0]+12)});
-		notesHarmony = notesList;
 		^Harmony.new.init(notesList+fund);
 	}
 
-
-
-	assignListIndex{
+	prAssignListIndex{
 		var cond = true;
 		var i=0;
 		for(0,defAc.arms.size-1,{arg i;
@@ -79,7 +76,7 @@ Harmony{
 		^cond;
 	}
 
-	setSimplify{
+	prSetSimplify{
 		var notesTemp = this.notesHarmony;
 		var different = Array.new(notesHarmony.size);
 		notesTemp  = notesTemp %12;
@@ -101,7 +98,7 @@ Harmony{
 		notesSimplified = different;
 	}
 
-	setNotesIntervals{
+	prsetNotesIntervals{
 		var dist;
 		notesInterval = Array.new(notesHarmony.size);
 		for(0,notesHarmony.size-1,{arg i;
@@ -133,7 +130,7 @@ Harmony{
 		^regresar;
 	}
 
-	setInversion{
+	prSetInversion{
 		inversion = switch (notesInterval[0],
 			1, { 0 },
 			3, { 1 },
@@ -142,7 +139,7 @@ Harmony{
 		);
 	}
 
-	setInversionString{
+	prSetInversionString{
 		var invS="";
 		var inv = inversion;
 		if(isSeventh.not,{
@@ -286,5 +283,4 @@ Harmony{
 		^this.fundamentalString++
 		harmonyTypeStr;
 	}
-
 }
