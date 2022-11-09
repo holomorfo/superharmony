@@ -138,7 +138,7 @@ Tonality{
 
 	getHarmonyTriad{arg degree=0;
 		var arm ="";
-		arm = Harmony().create(
+		arm = Harmony.create(
 			notesTonality[degree],
 			this.getTriadType(degree));
 		^arm;
@@ -146,7 +146,7 @@ Tonality{
 
 	getHarmonySeventh{arg degree=0;
 		var arm ="";
-		arm = Harmony().create(
+		arm = Harmony.create(
 			notesTonality[degree],
 			this.getSeventhType(degree));
 		^arm;
@@ -261,16 +261,16 @@ Tonality{
 
 	getHarmony{arg degree=0, type="3";
 		var arm ="";
-		arm = Harmony().create(
+		arm = Harmony.create(
 			notesTonality[degree],
 			this.getTriadType(degree));
 		if(type == "7",{
-			arm = Harmony().create(
+			arm = Harmony.create(
 				notesTonality[degree],
 				this.getSeventhType(degree));
 			},{
 				if(type == "DD",{
-					arm = Harmony().create(
+					arm = Harmony.create(
 						notesTonality[degree]+7,
 						"D7");
 				});
