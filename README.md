@@ -1,5 +1,5 @@
 # superharmony
-SuperCollider harmony helper
+SuperCollider harmony helper utility.
 
 ## Description 
 SuperCollider classes for creating chords and harmonies.
@@ -8,24 +8,24 @@ SuperCollider classes for creating chords and harmonies.
 ```
 // Example 1
 (
-a=Armonia();
+a=Harmony();
 a=a.create(5,"D7" );
-a.nombreArmStr.postln;
-a.notasArmonia.postln;
-a.tipoDeAcordeStr.postln;
+a.nameHarmonyString.postln;
+a.notesHarmony.postln;
+a.harmonyTypeStr.postln;
 )
 ```
 - You can create chord progressions with tonal information and modulation.
 ```
 //Example 2
-u=UniversoTonal();
+u=TonalUniverse();
 ~str=
 "C,m:  I V7/VI VI V VI II II7 IV VII7 I
 E,m: V7 I IV V7/V I
 C,m: V7/V V7 I
 ";
-~chords=u.getListaArmonias(~str);
-~arrayNotes=~chords.collect({arg ar; ar.notasArmonia[0..3]});
+~chords=u.getHarmonyList(~str);
+~arrayNotes=~chords.collect({arg ar; ar.notesHarmony[0..3]});
 ```
 
 
