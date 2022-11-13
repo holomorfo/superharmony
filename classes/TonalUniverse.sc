@@ -1,12 +1,12 @@
 TonalUniverse{
-	var <>majorUniverse;
-	var <>minorUniverse;
-	var <>majorPercentage;
-	var <>minorPercentage;
-	var <>percentagesVector;
-	var <>currentScaleFundamental;
-	var <>currentScaleType;
-	var <>currentScaleIndex=0;
+	var <majorUniverse;
+	var <minorUniverse;
+	var <majorPercentage;
+	var <minorPercentage;
+	var <percentagesVector;
+	var <currentScaleFundamental;
+	var <currentScaleType;
+	var <currentScaleIndex=0;
 
 	*new {
 		^super.new.init();
@@ -69,7 +69,6 @@ TonalUniverse{
 		var esc,fund, tip ;
 		string= string.stripWhiteSpace;
 		fund = this.note2Num(string.split($,)[0]);
-		//("fund "++fund).postln;
 		tip =string.split($,)[1];
 		if(tip=="M",{
 			esc=this.majorUniverse[fund];
@@ -111,24 +110,24 @@ TonalUniverse{
 			tonActStr=seccionAct[0];
 			tonActual= this.getScaleString(tonActStr);
 			listaGradStr =seccionAct[1].stripWhiteSpace.split($ );
-			listaGradStr.do({arg grad;
+			listaGradStr.do({arg degree;
 				if(listaFinal.size>0,{
 					var arm;
-					grad = grad.stripWhiteSpace;
+					degree = degree.stripWhiteSpace;
 //					"Agregar los siguientes".postln;
 					// "==== ".post;
 					// ("Lista size "++listaFinal.size).postln;
 					// listaFinal.do({arg v; (","++v.nameHarmonyNoInversionStr).post});
 					// (listaFinal[listaFinal.size-1].notesHarmony
 					// ).postln;
-					arm=tonActual.getClosestChord(
-						listaFinal[listaFinal.size-1],tonActual.getChordDegreeString(grad));
+					arm=Tonality.getClosestChord(
+						listaFinal[listaFinal.size-1],tonActual.getHarmonyfromDegree(degree));
 					listaFinal.add(arm);
 					//listaFinal.postln;
 					},{
-						grad = grad.stripWhiteSpace;
+						degree = degree.stripWhiteSpace;
 						//"Agregar el primero".postln;
-						listaFinal.add(tonActual.getChordDegreeString(grad));
+						listaFinal.add(tonActual.getHarmonyfromDegree(degree));
 				});
 				listaFinal.collect({arg val; val.nameHarmonyNoInversionStr});
 			});
@@ -205,25 +204,25 @@ TonalUniverse{
 				//"Entré1".postln;
 				// Si es dominante de otra scale
 				for(0,scale.notesTonality.size-1,{arg i;
-					var grad;
+					var degree;
 					//"Entré 1.1".postln;
 					fund=scale.notesTonality[i];
 					//Aqui los grados 0-6
 					type=scale.getTriadType(i);
 					esc = this.getScale(fund,type);
-					grad=this.degreeSimple(unArm,esc);
+					degree=this.degreeSimple(unArm,esc);
 					//"Entré3".postln;
-					if(grad==5,{
+					if(degree==5,{
 						coor.setRegion(
-							i+1,esc.scaleType,grad);
+							i+1,esc.scaleType,degree);
 						// AQUI VOY
 					});
-					if(grad==7,{
+					if(degree==7,{
 						// Aqui revisa si es o7
 						if(unArm.harmonyTypeStr=="o7",{
 							for(0,unArm.notesHarmony.size-1,{arg j;
 								if(esc.noteDegree(unArm.notesHarmony[j])==7,{
-									coor.setRegion(i+1,esc.scaleType,grad);
+									coor.setRegion(i+1,esc.scaleType,degree);
 									//break
 								});
 							});

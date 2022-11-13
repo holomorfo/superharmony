@@ -2,24 +2,24 @@ ChordsDefinitions{
 	var <>arms;
 	init{
 		arms=Array.new(500);
-		arms.add(HarmonyDefinition.new.init("M",[0, 4, 7]));
-		arms.add(HarmonyDefinition.new.init("m",[0, 3, 7]));
-		arms.add(HarmonyDefinition.new.init("o",[0, 3, 6]));
-		arms.add(HarmonyDefinition.new.init("+",[0, 4, 8]));
-		arms.add(HarmonyDefinition.new.init("M7",[0, 4, 7, 11]));
-		arms.add(HarmonyDefinition.new.init("D7",[0, 4, 7, 10]));
-		arms.add(HarmonyDefinition.new.init("m7",[0, 3, 7, 10]));
-		arms.add(HarmonyDefinition.new.init("o/7",[0, 3, 6, 10]));
-		arms.add(HarmonyDefinition.new.init("o7",[0, 3, 6, 9]));
-		arms.add(HarmonyDefinition.new.init("mM7",[0, 3, 7, 11]));
-		arms.add(HarmonyDefinition.new.init("D7*5",[0, 4, 10]));
-		arms.add(HarmonyDefinition.new.init("DM9*5",[0, 2, 4, 10]));
-		arms.add(HarmonyDefinition.new.init("Dm9*5",[0, 1, 4, 10]));
+		arms.add(HarmonyDefinition.new.init("M",[0,4,7]));
+		arms.add(HarmonyDefinition.new.init("m",[0,3,7]));
+		arms.add(HarmonyDefinition.new.init("o",[0,3,6]));
+		arms.add(HarmonyDefinition.new.init("+",[0,4,8]));
+		arms.add(HarmonyDefinition.new.init("M7",[0,4,7,11]));
+		arms.add(HarmonyDefinition.new.init("D7",[0,4,7,10]));
+		arms.add(HarmonyDefinition.new.init("m7",[0,3,7,10]));
+		arms.add(HarmonyDefinition.new.init("o/7",[0,3,6,10]));
+		arms.add(HarmonyDefinition.new.init("o7",[0,3,6,9]));
+		arms.add(HarmonyDefinition.new.init("mM7",[0,3,7,11]));
+		arms.add(HarmonyDefinition.new.init("D7*5",[0,4,10]));
+		arms.add(HarmonyDefinition.new.init("DM9*5",[0,2,4,10]));
+		arms.add(HarmonyDefinition.new.init("Dm9*5",[0,1,4,10]));
 
 		 arms.add(HarmonyDefinition.new.init("5",[0,7]));
 		 arms.add(HarmonyDefinition.new.init("Sus4",[0,5,7]));
 		 arms.add(HarmonyDefinition.new.init("Sus2",[0,2,7]));
-		 arms.add(HarmonyDefinition.new.init("6",[0,4,7,9])); // Check difference with A7 in [CM]
+		//  arms.add(HarmonyDefinition.new.init("6",[0,4,7,9])); // Check difference with A7 in [CM]
 		 arms.add(HarmonyDefinition.new.init("m6",[0,3,7,9]));
 		 arms.add(HarmonyDefinition.new.init("9",[0,2,4,7,10]));
 		 arms.add(HarmonyDefinition.new.init("m9",[0,2,3,7,10]));
