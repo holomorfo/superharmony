@@ -1,0 +1,53 @@
+TITLE:: TonalUniverse
+summary:: Set of tonalities and relations between them
+categories:: Harmony
+
+
+DESCRIPTION::
+Defines a TonalUniverse that consists in an set of Tonalities, functions and relations among them. It can be used to analyze a chord relation to any tonality
+
+Part of link::Guides/superharmony::, a library with utilities for tonal analysis of chords.
+
+CLASSMETHODS::
+
+METHOD:: new
+Creates a tonality universe that contains all the mayor and minor tonalities.
+code::
+u=TonalUniverse();
+::
+
+
+
+INSTANCEMETHODS::
+
+subsection:: Accessing
+
+
+METHOD:: getHarmonyList
+From a string of roman numeral functions, returns a proposal of chords with those tonal functions.
+code::
+(
+u=TonalUniverse();
+~str=
+"C,m:  I V7/VI VI V VI II II7 IV VII7 I
+E,m: V7 I IV V7/V I
+C,m: V7/V V7 I
+";
+~chords=u.getHarmonyList(~str);
+~arrayNotes=~chords.collect({arg ar; ar.notesHarmony[0..3]});
+)
+// -> [ [ 0, 3, 7, 12 ], [ -2, 3, 7, 13 ], [ -4, 3, 8, 12 ], [ -5, 2, 7, 11 ], [ -4, 3, 8, 12 ], [ -4, 5, 8, 14 ], [ -7, 2, 8, 12 ], [ -7, 0, 8, 12 ], [ -7, -1, 8, 14 ], [ -9, 0, 7, 15 ], [ -9, -1, 9, 18 ], [ -8, -1, 7, 19 ], [ -8, 0, 9, 21 ], [ -8, 1, 6, 22 ], [ -8, -1, 7, 23 ], [ -10, -3, 6, 24 ], [ -10, -5, 5, 23 ], [ -9, -5, 3, 24 ] ]
+
+::
+
+ARGUMENT::
+String with current tonality and harmonies in roman numerals separeted by space.
+
+RETURNS::
+List of Harmonies with those tonal functions.
+
+
+
+
+section:: Authors
+Cristian Banuelos, 2022.

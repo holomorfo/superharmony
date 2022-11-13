@@ -1,12 +1,12 @@
 TonalUniverse{
-	var <>majorUniverse;
-	var <>minorUniverse;
-	var <>majorPercentage;
-	var <>minorPercentage;
-	var <>percentagesVector;
-	var <>currentScaleFundamental;
-	var <>currentScaleType;
-	var <>currentScaleIndex=0;
+	var <majorUniverse;
+	var <minorUniverse;
+	var <majorPercentage;
+	var <minorPercentage;
+	var <percentagesVector;
+	var <currentScaleFundamental;
+	var <currentScaleType;
+	var <currentScaleIndex=0;
 
 	*new {
 		^super.new.init();

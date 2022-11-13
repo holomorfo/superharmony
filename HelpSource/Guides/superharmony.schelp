@@ -8,19 +8,9 @@ section:: Components
 
 subsection:: Harmony
 
-Supported by link::Browse#Libraries>MathLib>Cartesian%20&c.#Cartesian &c.::
-
-
 subsection:: Tonality
 
-Tonality and scales
-
-subsection:: Tonal universe
-
-Tonal universe of coordinates.
-
-image::Chordtris.png::
-
+subsection:: TonalUniverse
 
 
 section:: Author
