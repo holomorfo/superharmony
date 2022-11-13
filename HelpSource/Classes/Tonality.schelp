@@ -1,0 +1,334 @@
+TITLE:: Tonality
+summary:: Representation of a tonality via a scale and harmonies
+categories:: Harmony
+
+
+DESCRIPTION::
+Defines a Tonality as a pari of arrays of notes and chords with methods to get harmonic function I, II, III, IV, V, VI, VII etc.
+
+Part of link::Guides/superharmony::, a library with utilities for tonal analysis of chords.
+
+CLASSMETHODS::
+
+METHOD:: new
+Creates a new Tonality instance with a base note integer and a string type.
+"M" major = [0,2,4,5,7,9,11], "m" harmonic minor = [0, 2, 3, 5, 7, 8, 11]
+Can be called with the shorthand notation
+code::
+a = Tonality.new(0,"M")
+b = Tonality(0,"m")
+::
+
+ARGUMENT::
+Base of the scale as in integer value
+
+ARGUMENT::
+Type of the scale, currently only major "M" and harmonic minor "m" are supported.
+
+
+METHOD:: degreeRoman2Number
+Converts string degree to integer value.
+
+code::
+Tonality.degreeRoman2Number("I") // 0
+Tonality.degreeRoman2Number("iii") // 2
+Tonality.degreeRoman2Number("VII") // 6
+::
+
+ARGUMENT::
+String with the value of degree.
+
+RETURNS::
+Integer with degree value, from 0 to 6.
+
+
+METHOD:: getClosestChord
+A origin harmony and a target harmony, this function returns an harmony equivalent to the "target" that is closest to the "origin" harmony using the Manhattan metric (taxicab metric).
+
+code::
+a= Harmony([0,4,7,12])
+b= Harmony.create(9,"D7")
+b.print
+
+c=Tonality.getClosestChord(a,b)
+c.print
+// [9,13,16,19]
+::
+
+ARGUMENT::
+Origin Harmony
+
+ARGUMENT::
+Target Harmony
+
+RETURNS::
+A harmony equivalent to target harmony closest to Origin Harmony
+
+
+
+
+
+INSTANCEMETHODS::
+
+subsection:: Accessing
+
+
+METHOD:: notesPercentage
+Checks the percentage (value from 0 to 1), of notes in an array that are part of the current tonality.
+code::
+a = Tonality(0,"M") // [0,2,4,5,7,9,11]
+a.notesPercentage([0,2,4]) // 1.0
+a.notesPercentage([1,3,6]) // 0.0
+a.notesPercentage([4,6,7]) // 0.666...
+a.notesPercentage([0,1]) // 0.5
+::
+
+ARGUMENT::
+Array of interger values.
+
+RETURNS::
+Float value with range 0.0 to 1.0 representing the percentage of notes present in the tonality
+
+
+METHOD:: getHarmonyfromDegree
+Returns the harmony/chord associated with the corresponding scale degree in roman numeral.
+code::
+a = Tonality(0,"M") // [0,2,4,5,7,9,11]
+h = a.getHarmonyfromDegree("I") // Harmony
+h.printSimple // CM
+a.getHarmonyfromDegree("i").printSimple // CM since its case insensitive
+a.getHarmonyfromDegree("II").printSimple // Dm
+a.getHarmonyfromDegree("III").printSimple // Em
+a.getHarmonyfromDegree("IV").printSimple // FM
+a.getHarmonyfromDegree("V").printSimple // GM
+a.getHarmonyfromDegree("V7/V").printSimple // DD7 7 (D dominant seventh)
+a.getHarmonyfromDegree("VI").printSimple // AM
+a.getHarmonyfromDegree("VI").printSimple // AM
+a.getHarmonyfromDegree("VII").printSimple // Bo (B diminished)
+a.getHarmonyfromDegree("x") // nil
+::
+
+ARGUMENT::
+String degree, values can be I,II,III,IV,V,VI,VII and seventh chords I7,II7,III7,IV7,V7,VI7,VII7. The value is case insensitive, so I gives the same result as i.
+RETURNS::
+A link::Classes/Harmony:: with the corresponding tonal function is the input is value, nil if the input was invalid
+
+
+METHOD:: getHarmony
+Returns the harmony/chord triad or seventh associated with the corresponding scale degree in numeric value (0-6).
+code::
+a = Tonality(0,"M")
+h = a.getHarmony(0,"3") // Harmony
+h.print // CM
+a.getHarmony(0,"3").printSimple // CM
+a.getHarmony(0,"7").printSimple // CM7
+a.getHarmony(1,"3").printSimple // Dm
+a.getHarmony(1,"7").printSimple // Dm7
+a.getHarmony(2,"3").printSimple // Em
+a.getHarmony(2,"7").printSimple // Em7
+a.getHarmony(3,"3").printSimple // FM
+a.getHarmony(3,"7").printSimple // FM7
+::
+
+ARGUMENT::
+Integer degree, values can be 0 to 6.
+
+ARGUMENT::
+String to indicate if triad "3" or seventh "7" chord.
+
+RETURNS::
+A link::Classes/Harmony:: with the corresponding tonal function is the input is value, nil if the input was invalid
+
+
+
+METHOD:: getHarmonySeventh
+Returns the harmony/chord seventh associated with the corresponding scale degree in numeric value (0-6).
+code::
+a = Tonality(0,"M")
+h = a.getHarmonySeventh(0) // Harmony
+h.print // CM
+a.getHarmonySeventh(1).printSimple // Dm7 7
+a.getHarmonySeventh(2).printSimple // Em7 7
+a.getHarmonySeventh(3).printSimple // FM7 7:w
+::
+
+ARGUMENT::
+Integer degree, values can be 0 to 6.
+
+
+RETURNS::
+A seventh link::Classes/Harmony:: with the corresponding tonal function is the input is value, nil if the input was invalid
+
+
+
+METHOD:: getHarmonyTriad
+Returns the harmony/chord triad associated with the corresponding scale degree in numeric value (0-6).
+code::
+a = Tonality(0,"M")
+h = a.getHarmonyTriad(0) // Harmony
+h.print // CM
+a.getHarmonyTriad(1).printSimple // Dm
+a.getHarmonyTriad(2).printSimple // Em
+a.getHarmonyTriad(3).printSimple // FM
+::
+
+ARGUMENT::
+Integer degree, values can be 0 to 6.
+
+RETURNS::
+A seventh link::Classes/Harmony:: with the corresponding tonal function is the input is value, nil if the input was invalid.
+
+
+METHOD:: getSeventhType
+Returns the type of seventh chord from an integer scale degree.
+code::
+a = Tonality(0,"M")
+h = a.getSeventhType(0) // M7
+a.getSeventhType(1) // m7
+a.getSeventhType(2) // m7
+a.getSeventhType(3) // M7
+a.getSeventhType(4) // D7
+a.getSeventhType(5) // m7
+a.getSeventhType(6) // o/7
+::
+
+ARGUMENT::
+Integer degree, values can be 0 to 6.
+
+RETURNS::
+A string with the type of seventh chord.
+
+
+METHOD:: getTriadType
+Returns the type of triad chord from an integer scale degree.
+code::
+a = Tonality(0,"M")
+a.getTriadType(0) // M
+a.getTriadType(1) // m
+a.getTriadType(2) // m
+a.getTriadType(3) // M
+a.getTriadType(4) // D
+a.getTriadType(5) // m
+a.getTriadType(6) // o
+::
+
+ARGUMENT::
+Integer degree, values can be 0 to 6.
+
+RETURNS::
+A string with the type of triad chord.
+
+
+METHOD:: listChords
+Returns a list of Harmonies that belong to the tonality.
+
+RETURNS::
+List of link::Classes/Harmony::.
+
+
+METHOD:: listNotesBelongs
+Checks if a list of notes belongs to the tonality, true if all notes belong to the tonality, false if at least one note is not part of the tonality.
+code::
+a = Tonality(0,"M")
+a.notesTonality  // -> [ 0, 2, 4, 5, 7, 9, 11 ]
+a.listNotesBelongs([0,2,1]) // false
+a.listNotesBelongs([0,2,4]) // true
+a.listNotesBelongs([7,9]) // true
+a.listNotesBelongs([]) // false
+::
+
+ARGUMENT::
+List of integers.
+
+RETURNS::
+Boolean value, true if all notes belong to the tonality, false if at least one note is not part of the tonality.
+
+
+METHOD:: noteBelongs
+Checks if a note belongs in the tonality.
+code::
+a = Tonality(0,"M")
+a.notesTonality  // -> [ 0, 2, 4, 5, 7, 9, 11 ]
+a.noteBelongs(0) // true
+a.noteBelongs(1) // false
+::
+
+ARGUMENT::
+Integer value
+
+RETURNS::
+Boolean value, true if note belongs to the tonality, false if its not part of the tonality.
+
+
+METHOD:: noteDegree
+Returns an integeger degree from the note numerical value, returns -1 if number is not part of the scale.
+
+code::
+a = Tonality(0,"M")
+a.notesTonality  // -> [ 0, 2, 4, 5, 7, 9, 11 ]
+a.noteDegree(0) // 1
+a.noteDegree(1) // 1
+a.noteDegree(5) // 4
+a.noteDegree(11) // 7
+::
+
+ARGUMENT::
+Integer value with numeric note.
+
+RETURNS::
+Integer value with degree value 0 to 6, and -1 if it does not belong.
+
+
+METHOD:: notesTonality
+Notes that are part of the tonality.
+
+code::
+a = Tonality(0,"M")
+a.notesTonality  // -> [ 0, 2, 4, 5, 7, 9, 11 ]
+b = Tonality(9,"m")
+b.notesTonality  // -> [ 9, 11, 0, 2, 4, 5, 8 ]
+c = Tonality(6,"M")
+c.notesTonality  // -> [ 6, 8, 10, 11, 1, 3, 5 ]
+::
+
+RETURNS::
+List of integers with tonality values in degree order.
+
+
+METHOD:: possibleChords
+From a harmony, returns a list of the closest chords in the tonality to the reference ordered.
+
+code::
+a = Tonality(0,"M")
+a.possibleChords(Harmony([0,2,4,7]))
+// -> [ [ 1, CM ], [ 2, CM7 7 ], [ 2, Am7 7 ], [ 3, Dm ], [ 3, Em ], [ 3, Am ], [ 3, Bo ], [ 3, Dm6 6 ], [ 3, Do ], [ 3, Bo7 ], [ 4, FM ], [ 4, GM ], [ 4, Dm7 7 ], [ 4, Em7 7 ], [ 4, FM7 7 ], [ 4, GD7 7 ], [ 4, Em7 7 ], [ 4, Fm ], [ 4, GDM9*5 7 ], [ 4, GDm9*5 7 ], [ 4, G7b5 7 ], [ 4, G7#5 7 ], [ 4, GD7*5 7 ], [ 5, G9 7 ], [ 5, G7b9 7 ] ]
+::
+
+ARGUMENT::
+link::Classes/Harmony:: of reference.
+
+RETURNS::
+List of distance and link::Classes/Harmony::, [distance,Harmony]  closest to the reference that belongs to the tonality, ordered by distance.
+
+
+METHOD:: scaleBase
+Integer value with base of the chord 0-6.
+
+METHOD:: scaleType
+String value with the type of the scale "M" for major and "m" for minor.
+
+
+
+EXAMPLES::
+
+Creating a Tonalyt
+code::
+a = Tonality(0,"M")
+h = a.getHarmonyfromDegree("I7")
+h.printSimple // CM7 7
+::
+
+
+
+section:: Authors
+Cristian Banuelos, 2022.
