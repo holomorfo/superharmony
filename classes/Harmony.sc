@@ -1,15 +1,15 @@
 Harmony{
-	var <>fundamental = 0;
-	var <>notesHarmony;
-	var <>notesSimplified;
-	var <>notesInterval;
-	var <>harmonyTypeStr="*";
-	var <>inversion;
-	var <>inversionStr="";
-	var <>defAc;
+	var <fundamental = 0;
+	var <notesHarmony;
+	var <notesSimplified;
+	var <notesInterval;
+	var <harmonyTypeStr="*";
+	var <inversion;
+	var <inversionStr="";
+	var prDefAc;
 	var isSeventh=false;
 	var substract;
-	var <>idxAcorde;
+	var prIdxAcorde;
 	*new { arg notesList=[0];
 		^super.new.init(notesList);
 	}
@@ -17,47 +17,44 @@ Harmony{
 	init{arg notesList;
 		notesList=notesList.sort;
 		if(notesList.size>0,{
-			defAc= ChordsDefinitions.new.init;
+			prDefAc= ChordsDefinitions.new.init;
 			notesHarmony = notesList;
 			notesInterval = Array.fill(notesHarmony.size,0);
-			this.setSimplify();
-			this.assignListIndex();
-			this.setNotesIntervals();
-			this.setInversion();
-			this.setInversionString();
+			notesSimplified = this.prSetSimplify();
+			this.prAssignListIndex();
+			this.prSetNotesIntervals();
+			this.prSetInversion();
+			this.prSetInversionString();
 			},{
 				notesHarmony = [0];
 				notesInterval = [0];
 		});
 	}
 
-	create{arg  fund, type;
-		var notesList;
-		defAc= ChordsDefinitions.new.init;
-		defAc.arms.collect({arg elem, num;
+	*create{arg fund, type;
+		var notesList, def;
+		def= ChordsDefinitions.new.init;
+		def.arms.collect({arg elem, num;
 			if(elem.name == type,{
 				notesList = elem.notesDefinition;
 			});
 		});
 		if(notesList.size==3,{notesList.add(notesList[0]+12)});
-		notesHarmony = notesList;
 		^Harmony.new.init(notesList+fund);
 	}
 
-
-
-	assignListIndex{
+	prAssignListIndex{
 		var cond = true;
 		var i=0;
-		for(0,defAc.arms.size-1,{arg i;
-			if(this.belongsInList(defAc.arms[i].notesDefinition),{
-				idxAcorde = i;
-				harmonyTypeStr = defAc.arms[i].name;
+		for(0,prDefAc.arms.size-1,{arg i;
+			if(this.prBelongsInList(prDefAc.arms[i].notesDefinition),{
+				prIdxAcorde = i;
+				harmonyTypeStr = prDefAc.arms[i].name;
 			});
 		});
 	}
 
-	belongsInList{arg chordNotes;
+	prBelongsInList{arg chordNotes;
 		var cond=false;
 		var tempA = Array.new();
 		if(notesSimplified.size==chordNotes.size,{
@@ -79,11 +76,11 @@ Harmony{
 		^cond;
 	}
 
-	setSimplify{
+	prSetSimplify{
 		var notesTemp = this.notesHarmony;
 		var different = Array.new(notesHarmony.size);
-		notesTemp  = notesTemp %12;
-		notesTemp  = notesTemp .sort;
+		notesTemp  = notesTemp%12;
+		notesTemp  = notesTemp.sort;
 		different.add(notesTemp[0]);
 		for(0, notesTemp.size-1,{arg i;
 			var condicion = 0;
@@ -98,23 +95,23 @@ Harmony{
 				different.add(notesTemp[i]);
 			});
 		});
-		notesSimplified = different;
+		^different
 	}
 
-	setNotesIntervals{
+	prSetNotesIntervals{
 		var dist;
 		notesInterval = Array.new(notesHarmony.size);
 		for(0,notesHarmony.size-1,{arg i;
 			var resta = (fundamental-notesHarmony[i]);
 			dist = abs((fundamental-notesHarmony[i]))%12;
-			notesInterval.add(this.diatonicInterval(dist));
-			if(this.diatonicInterval(dist)==7,{
+			notesInterval.add(this.prDiatonicInterval(dist));
+			if(this.prDiatonicInterval(dist)==7,{
 				isSeventh=true;
 			});
 		});
 	}
 
-	diatonicInterval{arg dist;
+	prDiatonicInterval{arg dist;
 		var regresar=(-1);
 		regresar = switch (dist,
 			0,   { 1 },
@@ -133,7 +130,7 @@ Harmony{
 		^regresar;
 	}
 
-	setInversion{
+	prSetInversion{
 		inversion = switch (notesInterval[0],
 			1, { 0 },
 			3, { 1 },
@@ -142,7 +139,7 @@ Harmony{
 		);
 	}
 
-	setInversionString{
+	prSetInversionString{
 		var invS="";
 		var inv = inversion;
 		if(isSeventh.not,{
@@ -210,12 +207,14 @@ Harmony{
 	}
 
 	metricMod12{arg unArm;
-		^this.distance(
+		^Harmony.lavenshteinDistance(
 			this.notesHarmony%12,
 			unArm.notesHarmony%12);
 	}
 
-	distance{arg s0, s1;
+	*lavenshteinDistance{arg s0, s1;
+		// Levenshtein_distance
+		// https://gist.github.com/ogregoire/6eff7186fb73715924c2c1b044daee63
 		var len0 = s0.size+1;
 		var len1 = s1.size+1;
 		// the array of distances
@@ -286,5 +285,4 @@ Harmony{
 		^this.fundamentalString++
 		harmonyTypeStr;
 	}
-
 }
