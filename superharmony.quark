@@ -4,7 +4,7 @@
 	\summary:		"Utilities to create harmonic arrays",
 	\author: 		"Cristian Banuelos",
 	\organization: 	"dr_holomorfo",
-	\version:		"0.0.1",
+	\version:		"1.0.0",
 	\country: 		"USA",
 	\since: 		"2022",
 	\status:		"beta"
