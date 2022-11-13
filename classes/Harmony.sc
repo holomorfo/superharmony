@@ -20,7 +20,7 @@ Harmony{
 			prDefAc= ChordsDefinitions.new.init;
 			notesHarmony = notesList;
 			notesInterval = Array.fill(notesHarmony.size,0);
-			this.prSetSimplify();
+			notesSimplified = this.prSetSimplify();
 			this.prAssignListIndex();
 			this.prSetNotesIntervals();
 			this.prSetInversion();
@@ -79,7 +79,6 @@ Harmony{
 	prSetSimplify{
 		var notesTemp = this.notesHarmony;
 		var different = Array.new(notesHarmony.size);
-		"prSetSimplify".postln;
 		notesTemp  = notesTemp%12;
 		notesTemp  = notesTemp.sort;
 		different.add(notesTemp[0]);
@@ -96,9 +95,7 @@ Harmony{
 				different.add(notesTemp[i]);
 			});
 		});
-		"different".postln;
-		different.postln;
-		notesSimplified = different;
+		^different
 	}
 
 	prSetNotesIntervals{

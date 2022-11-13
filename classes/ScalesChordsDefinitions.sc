@@ -136,9 +136,9 @@ ScalesChordsDefinitions{
 			chordsList.add
 			(Harmony.new.init(base+7+def.str2Ac("7b9")));
 		}
-		{"l"}   { "no hay".postln; }
-		{"n"}   { "no hay".postln; }
-		{"a"}   { "no hay".postln; };
+		{"l"}   { "coming soon".postln; }
+		{"n"}   { "coming soon".postln; }
+		{"a"}   { "coming soon".postln; };
 		^this;
 	}
 }

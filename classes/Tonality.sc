@@ -1,15 +1,35 @@
 Tonality{
-	var <>notesTonality;
+	var <notesTonality;
+	var <scaleType; //Char M:major, m: minor, a: armonica, n: natural, l:melodica
+	var <listChords; 
+	var <scaleBase; 
 	var defScalesChords;
-	var <>listChords; 
-	var <>scaleType; //Char M:major, m: minor, a: armonica, n: natural, l:melodica
-	var <>scaleBase; 
 	var sharp; // boolean if notation has sharps or not
 	var major;
 	var harmonicMinor;
 
 	*new { arg base=0, type="M";
 		^super.new.init(base, type);
+	}
+
+	*degreeRoman2Number{arg romNum;
+		var gradNum=(-1);
+		switch (romNum)
+		{"I" }   { gradNum = 0;}
+		{"II"}   { gradNum = 1;}
+		{"III"}   { gradNum = 2;}
+		{"IV"}   { gradNum = 3;}
+		{"V"}   { gradNum = 4;}
+		{"VI"}   { gradNum = 5;}
+		{"VII"}   { gradNum = 6;}
+		{"i" }   { gradNum = 0;}
+		{"ii"}   { gradNum = 1;}
+		{"iii"}   { gradNum = 2;}
+		{"iv"}   { gradNum = 3;}
+		{"v"}   { gradNum = 4;}
+		{"vi"}   { gradNum = 5;}
+		{"vii"}   { gradNum = 6;};
+		^gradNum;
 	}
 
 	init{arg base=0, type="M";
@@ -71,10 +91,10 @@ Tonality{
 
 	noteDegree{arg notaAc;
 		var reg=(-1);
-		var grad =
+		var degree =
 		this.notesTonality.indexOf(notaAc%12);
-		if((grad==nil).not,{
-			reg = grad+1;
+		if((degree==nil).not,{
+			reg = degree+1;
 		});
 		^reg;
 	}
@@ -130,7 +150,6 @@ Tonality{
 					swap=true;
 				});
 			});
-
 		});
 		^lista;
 	}
@@ -152,14 +171,14 @@ Tonality{
 		^arm;
 	}
 
-	getClosestChord{arg ar1, ar2;
-		var armTemp=ar1, armReg, distFinal=(100), dist;
-		var nots, r=2;
+	*getClosestChord{arg originHarmony, targetHarmony;
+		var armTemp=originHarmony, armReg, distFinal=(100), dist;
+		var nots, r=3;
 		 "_______________".postln;
-		// ("Harmony 1 "++ar1.nameHarmonyNoInversionStr).postln;
-		// ("Harmony 2 "++ar2.nameHarmonyNoInversionStr).postln;
-		armReg = Harmony(ar2.notesHarmony);
-		nots = ar1.notesHarmony;
+		("Harmony 1 "++originHarmony.nameHarmonyNoInversionStr).postln;
+		("Harmony 2 "++targetHarmony.nameHarmonyNoInversionStr).postln;
+		armReg = Harmony(targetHarmony.notesHarmony);
+		nots = originHarmony.notesHarmony;
 		if(nots.size==4,{
 				for(nots[0]-r,nots[0]+r,{arg v1;
 					for(nots[1]-r,nots[1]+r,{arg v2;
@@ -167,8 +186,8 @@ Tonality{
 							for(nots[3]-r,nots[3]+r,{arg v4;
 								//(""++v1++","++v2++","++v3++","++v4).postln;
 								armTemp = Harmony([v1,v2,v3,v4]);
-								dist = ar1.metricTaxi(armTemp);
-								if(armTemp.equivalent(ar2),{
+								dist = originHarmony.metricTaxi(armTemp);
+								if(armTemp.equivalent(targetHarmony),{
 									if(dist<distFinal,{
 										armReg= Harmony([v1,v2,v3,v4]);
 										//("type lista "++
@@ -188,56 +207,41 @@ Tonality{
 		^armReg;
 	}
 
-	getChordDegreeString{arg grad = "I7 ";
-		var arr, domSec, tonTemporal, regArm;
+	getHarmonyfromDegree{arg degree = "I7 ";
+		var arr, domSec, tonTemporal, regArm="undefined";
 		var romNum,gradNum, gradTipRom,gradTipNum;
-		domSec = grad.split($/);
+		domSec = degree.split($/);
 		if(domSec.size==1,{
-			arr= this.separateStringDegree(grad);
+			arr= this.prSeparateStringDegree(degree);
 			romNum = arr[0];
 			gradTipRom = arr[1];
 			gradTipNum = "3";
-			gradNum=this.degreeRoman2Number(romNum);
+			gradNum=Tonality.degreeRoman2Number(romNum);
 			switch (gradTipRom)
 			{"7" }   { gradTipNum = "7";};
 
-			regArm =this.getHarmony(gradNum,gradTipNum);
+			if(gradNum>=0,{
+				regArm =this.getHarmony(gradNum,gradTipNum);
+			},{
+				regArm= nil
+			});
 			},{
 				// Aqui si es dominante secundario
-				var gradObjNum = this.degreeRoman2Number(domSec[1]);
+				var gradObjNum = Tonality.degreeRoman2Number(domSec[1]);
 				var tipoObj =this.getTriadType(gradObjNum);
 				var gradEscalado = this.notesTonality[gradObjNum];
 				if((""++tipoObj) == "o",{"entro".postln; tipoObj = "m";});
 				"Dominante secundario".postln;
 				("Valores "++gradEscalado++" "++tipoObj).postln;
 				tonTemporal = Tonality(gradEscalado,tipoObj);
-				regArm = tonTemporal.getChordDegreeString(domSec[0]);
+				regArm = tonTemporal.getHarmonyfromDegree(domSec[0]);
 		});
 		^(regArm);
 		//		^(""++(gradNum)++" "++gradTip);
 	}
 
-	degreeRoman2Number{arg romNum;
-		var gradNum=1;
-		switch (romNum)
-		{"I" }   { gradNum = 0;}
-		{"II"}   { gradNum = 1;}
-		{"III"}   { gradNum = 2;}
-		{"IV"}   { gradNum = 3;}
-		{"V"}   { gradNum = 4;}
-		{"VI"}   { gradNum = 5;}
-		{"VII"}   { gradNum = 6;}
-		{"i" }   { gradNum = 0;}
-		{"ii"}   { gradNum = 1;}
-		{"iii"}   { gradNum = 2;}
-		{"iv"}   { gradNum = 3;}
-		{"v"}   { gradNum = 4;}
-		{"vi"}   { gradNum = 5;}
-		{"vii"}   { gradNum = 6;};
-		^gradNum;
-	}
 
-	separateStringDegree{arg strDgr;
+	prSeparateStringDegree{arg strDgr;
 		var degreeRom="", typeRom ="";
 		var reg= Array.new(2);
 		strDgr= strDgr.stripWhiteSpace;
