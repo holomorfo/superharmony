@@ -22,6 +22,7 @@ TonalCoordinate{
 		" degree: ".post;
 		degree.post;
 		" label".post;
-		label.post;
+		label.postln;
 	}
 }
+ 
