@@ -1,10 +1,10 @@
 TITLE:: TonalUniverse
 summary:: Set of tonalities and relations between them
-categories:: Harmony
+categories:: Harmony, Chords, Tonality
 
 
 DESCRIPTION::
-Defines a TonalUniverse that consists in an set of Tonalities, functions and relations among them. It can be used to analyze a chord relation to any tonality
+Defines a TonalUniverse that consists in an set of Tonalities, functions and relations among them. It can be used to analyze a chord relation to any major and minor tonality.
 
 Part of link::Guides/superharmony::, a library with utilities for tonal analysis of chords.
 
@@ -24,7 +24,7 @@ subsection:: Accessing
 
 
 METHOD:: getHarmonyList
-From a string of roman numeral functions, returns a proposal of chords with those tonal functions.
+Parses a string with tonality and harmonies information in roman notation and, returns a list harmonies/chords with those tonal functions.
 code::
 (
 u=TonalUniverse();
@@ -41,12 +41,91 @@ C,m: V7/V V7 I
 ::
 
 ARGUMENT::
-String with current tonality and harmonies in roman numerals separeted by space.
+String with current tonality and harmonies in roman numerals separeted by space. Each line represents a tonality, the base and type are defined at the begining. After the colon the Roman numbers are added separated by space, it can have seventh or secondary functions.
+code::
+"BASE_NOTE,TYPE_SCALE: ROMAN_NUMBER"
+::
 
 RETURNS::
-List of Harmonies with those tonal functions.
+List of link::Classes/Harmony:: with those tonal functions.
 
 
+METHOD:: degreeSimple
+Returns the roman degree of the input Harmony with respect to the passed tonality
+code::
+u=TonalUniverse();
+c = Tonality(0,"M")
+u.degreeSimple(Harmony([0,4,7]), c) // 1
+u.degreeSimple(Harmony([9,12,16]), c) // 6
+u.degreeSimple(Harmony.create(5,"M"), c) // 4
+::
+
+ARGUMENT::
+link::Classes/Harmony:: to check.
+
+ARGUMENT::
+link::Classes/Tonality:: Tonality as reference.
+
+RETURNS::
+Integer value with degree of note (1-7) if harmony is part of the Tonality, 0 if its not part.
+
+
+METHOD:: degreeSimpleCurrent
+Returns the roman degree of the input Harmony with respect to current selected tonality in the tonality universe.
+code::
+u=TonalUniverse()
+u.setCurrentScale(9,"M");
+
+u.degreeSimpleCurrent(Harmony([0,4,7])) // 0
+u.degreeSimpleCurrent(Harmony([9,13,16])) // 1
+u.degreeSimpleCurrent(Harmony.create(1,"m")) // 3
+::
+
+ARGUMENT::
+link::Classes/Harmony:: to check.
+
+RETURNS::
+Integer value with degree of note (1-7) if harmony is part of the Tonality, 0 if its not part.
+
+
+METHOD:: degreeSecondary
+Finds the degrees to which the input harmony has a secondary function in the passed tonality, for example a secondary dominant or any other combination like V/II  III/VI, etc.
+code::
+u=TonalUniverse();
+c = Tonality(0,"M")
+u.degreeSecondary(Harmony([0,4,7]), c).print // scale 1 M degree: 1 label-
+u.degreeSecondary(Harmony([9,12,16]), c).print // scale 1 M degree: 6 label
+u.degreeSecondary(Harmony.create(2,"D7"), c).print // scale 5 M degree: 5 label
+::
+
+ARGUMENT::
+link::Classes/Harmony:: to check.
+
+ARGUMENT::
+link::Classes/Tonality:: Tonality as reference.
+
+RETURNS::
+link::Classes/TonalCoordinate:: with the information for the secondary function of the harmony with respect to the tonality.
+
+
+
+
+METHOD:: getVectorPercentages
+Finds the percentage, value between 0 and 1 of the notes that belong to each tonality 12 mayor and 12 minor.
+code::
+u=TonalUniverse();
+c = Tonality(0,"M")
+u.getVectorPercentages([0,4,7])
+// -> [ 1.0, 0.33333333333333, 0.66666666666667, 0.66666666666667, 0.33333333333333, 1.0, 0.0, 1.0, 0.66666666666667, 0.33333333333333, 0.66666666666667, 0.33333333333333, 0.66666666666667, 0.66666666666667, 0.66666666666667, 0.0, 1.0, 1.0, 0.0, 0.66666666666667, 0.66666666666667, 0.66666666666667, 0.33333333333333, 0.66666666666667 ]
+
+::
+
+ARGUMENT::
+List of notes, interger values
+
+
+RETURNS::
+Array of 24 values with percentage of notes that belong to each tonality, first 12 values are 12 mayor tonalities, next 12 values are the 12 minor tonalities starting with C.
 
 
 section:: Authors

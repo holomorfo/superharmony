@@ -135,19 +135,19 @@ TonalUniverse{
 		^listaFinal;
 	}
 
-	getVectorPercentages{arg listaArm;
+	getVectorPercentages{arg notesList;
 		percentagesVector=Array.new(32);
 		majorPercentage=Array.new(32);
 		minorPercentage=Array.new(32);
 		for(0,12-1,{arg i;
 			var porc=
-			majorUniverse[i].notesPercentage(listaArm);
+			majorUniverse[i].notesPercentage(notesList);
 			percentagesVector.add(porc);
 			majorPercentage.add(porc);
 		});
 		for(0,12-1,{arg i;
 			var porc=
-			minorUniverse[i].notesPercentage(listaArm);
+			minorUniverse[i].notesPercentage(notesList);
 			percentagesVector.add(porc);
 			majorPercentage.add(porc);
 		});
