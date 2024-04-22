@@ -4,7 +4,7 @@ Superharmony is a [SuperCollider](https://supercollider.github.io/) library of u
 
 ## Components
 
-###Harmony
+### Harmony
 
 You can create and manipulate harmonies as a set of notes and functions. For example:
 ```
